@@ -97,7 +97,7 @@ const showResult = result => {
       result.rest.map( item => {
         if(offset_page_num>result.total_hit_count){//お店をすべて表示後更新できなくする
             $("#btn--more-load").prop("disabled", true);
-        }
+        }//tableに検索結果を表示する
         $("#number").text(result.total_hit_count+"件のお店が見つかりました。")
         $("#table").append(`<tr><td>${item.name}</td>
                             <td><img src="${item.image_url.shop_image1}"></td>
