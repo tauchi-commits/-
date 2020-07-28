@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>商品検索画面</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <link  href="css/main.css"  rel="stylesheet" media="all"  />
+<script>
+  var hit_per_page_num =10; //一度に表示する件数
+  var offset_page_num = 1; //初期ページ
+  var Following_page=10;//次の１０件を表示する 
+if( navigator.geolocation ){
+	// 現在位置を取得できる場合の処理
+	console.log( "あなたの端末では、現在位置を取得することができます。" ) ;
+}else{// Geolocation APIに対応していない
+	// 現在位置を取得できない場合の処理
+	console.log( "あなたの端末では、現在位置を取得できません。" ) ;
+}
+navigator.geolocation.getCurrentPosition( successFunc , errorFunc , optionObj ) ;
+
+function successFunc( position ){
+	// 緯度
+	//console.log("緯度"+position.coords.latitude ) ;
+    var Latitude =position.coords.latitude
+	// 経度
+	//console.log("経度"+position.coords.longitude ) ; 
+    var Longitude=position.coords.longitude;
+function serchi(){
+    var url = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
+        var params = {
+        keyid: "ad2eab8923726c8f52262389c429ce89",
+        latitude:Latitude,
+        longitude:Longitude,
+        range: "",
+        freeword:"",
+        }   
+$("#btn--more-load").prop("disabled", true);//検索ボタンを押すまで更新buttonを押せなくする
+$("#submit").prop("disabled", false);//検索ボタンを２度押せなくする
+$("#submit").on("click",  () => {//条件を検索する
+    $("#submit").prop("disabled", true);
+    $("#btn--more-load").prop("disabled", false);
+    params. range= $("#range").val()
+    params.freeword=$("#freeword").val()
+    $.getJSON( url, params, function( result ) { 
+    showResult( result )
+})
+})
+}
+
+
+$("#btn--more-load").on("click",  () => {////次の１０件を表示する
+    offset_page_num+=Following_page;//検索位置1+10
+    var url = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
+        var params = {
+        keyid: "ad2eab8923726c8f52262389c429ce89",
+        latitude:Latitude,//緯度
+        longitude:Longitude,//経度
+        range: "",//範囲
+        freeword:"",//freeword検索
+        offset:offset_page_num,//初期ページ
+        hit_per_page:hit_per_page_num//次の１０件を表示する
+        }   
+    params. range= $("#range").val()//範囲検索
+    params.freeword=$("#freeword").val()//freeword検索
+    $.getJSON( url, params, function( result ) { 
+    showResult( result )
+})
+})
+serchi();
+};
+
+
+function errorFunc( error )
+{
+	// エラーコードのメッセージを定義
+	var errorMessage = {
+		0: "原因不明のエラーが発生しました…。" ,
+		1: "位置情報の取得が許可されませんでした…。" ,
+		2: "電波状況などで位置情報が取得できませんでした…。" ,
+		3: "位置情報の取得に時間がかかり過ぎてタイムアウトしました…。" ,
+	} ;
+
+	// エラーコードに合わせたエラー内容をアラート表示
+	alert( errorMessage[error.code] ) ;
+}
+// オプション・オブジェクト
+var optionObj = {
+	"enableHighAccuracy": false ,
+	"timeout": 8000 ,
+	"maximumAge": 5000 ,
+} ;
+const showResult = result => {
+      result.rest.map( item => {
+        if(offset_page_num>result.total_hit_count){//お店をすべて表示後更新できなくする
+            $("#btn--more-load").prop("disabled", true);
+        }
+        $("#number").text(result.total_hit_count+"件のお店が見つかりました。")
+        $("#table").append(`<tr><td>${item.name}</td>
+                            <td><img src="${item.image_url.shop_image1}"></td>
+                            <td><a href="${item.url}">詳細</a></td>
+                            <td><br>${item.access.line}</br>
+                            <br>${item.access.station}</br>
+                            <br>${item.access.station_exit}${item.access.walk}分</br></td>
+                            <td>${item.address}</td>
+                            </tr>`)
+      })
+}
+</script>
+</head>
+<body>
+<div class="box">   
+    <h1>検索画面</h1>
+</div>
+    <p class="subtitle">付近の飲食店の検索</p>
+<div class="item">
+<select id="range">
+    <option value="1">300m</option>
+    <option value="2">500m</option>
+    <option value="3">1km</option>
+    <option value="4">2km</option>
+    <option value="5">3km</option>
+</select>
+<input type="search"  class="freeword" id="freeword"　 placeholder="フリー検索">
+<p>＊選択できる範囲は3kmです</p>
+<input type="button" id="submit" value="検索"　>
+<button onclick="location.href='Restaurant.html'">リセット</button>
+</div>
+<div class="box">
+<h1>検索結果</h1>
+<p id="number"></p>
+</div>
+<table id="table" border="1" >
+<tr><th>店舗名</th><th>画像</th><th>店舗詳細</th><th>アクセス</th><th>住所</th></tr>
+</table>
+<input type="button"   id="btn--more-load" 　 value="更新"/>
+</body>
+</html>
