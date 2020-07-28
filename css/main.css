@@ -77,7 +77,7 @@ input{/*検索ボタンのデザイン*/
   border-radius: 10px;/*角の丸み*/
 }
 
-.freeword{
+.freeword{/*検索機能のデザイン*/
   display: inline-block;
   width: 200px;
   height:50px;
@@ -89,7 +89,7 @@ input{/*検索ボタンのデザイン*/
   
 }
 
-.btn--more-load{
+.btn--more-load{/*更新buttonのデザイン*/
   width: 200px;
   height:50px;
   background-color: white;
