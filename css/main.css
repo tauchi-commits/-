@@ -1,0 +1,100 @@
+table {/* tableを調整*/
+  border-collapse: collapse;
+  margin: 20px;
+}
+
+td {
+  padding: 0px;
+  width: 300px;
+  height:200px;
+  font-size:20px;
+  text-align:center
+}
+
+img {/*画像サイズの調整*/
+  vertical-align: bottom;
+  width:300px;
+  height:200px;
+}
+th{/*table内の文字を調整する*/
+  width:100px;
+  height:100px;
+  font-size:25px;
+}
+
+h1{
+ font-size: 280%; 
+ margin: 20px;
+}
+.subtitle{/*下線デザイン*/
+  font-size:25px;
+  margin: 20px;
+  border-bottom: dashed 2px #6594e0;
+}
+
+select{/*selectのデザイン*/
+  display: inline-block;
+  width: 100px;
+  height:50px;
+  background-color: white;
+  border: 3px solid	lightskyblue;
+  border-radius: 20px;
+  font-size: 20px;
+  
+}
+button{/*リセットボタンのデザイン*/
+  display: inline-block;
+  width: 100px;
+  height:50px;
+  background-color: white;
+  border: 3px solid	lightskyblue;
+  border-radius: 20px;
+  font-size: 20px;
+}
+
+input{/*検索ボタンのデザイン*/
+  display: inline-block;
+  width: 125px;
+  height:50px;
+  background-color: white;
+  border: 3px solid	lightskyblue;
+  border-radius: 20px;
+  font-size: 20px;
+
+}
+
+.item{/*項目位置*/
+  margin:20px;
+}
+
+.box{/*タイトル*/
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  font-weight: bold;
+  color: #6091d3;/*文字色*/
+  background: #FFF;
+  border: solid 3px #6091d3;/*線*/
+  border-radius: 10px;/*角の丸み*/
+}
+
+.freeword{
+  display: inline-block;
+  width: 200px;
+  height:50px;
+  background-color: white;
+  border: 3px solid	lightskyblue;
+  border-radius: 20px;
+  font-size: 20px;
+  text-align:center
+  
+}
+
+.btn--more-load{
+  width: 200px;
+  height:50px;
+  background-color: white;
+  border: 3px solid	lightskyblue;
+  border-radius: 20px;
+  font-size: 20px;
+}
+}
